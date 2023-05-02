@@ -40,7 +40,7 @@ import com.co.kr.domain.TodoListDomain;
 public class UserController {
 
 	@Autowired
-	private UserService userService
+	private UserService userService;
 
 	@Autowired
 	private UploadService uploadService;

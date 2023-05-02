@@ -18,7 +18,7 @@ public interface TodoMapper {
 	public void tdfileUpload(TodoFileDomain todoFileDomain);
 
 	//content update
-	public void tdContentUpdate(TodoContentDomain todoContentDomain);
+	public void tdContentUpdate(TodoContentDomain todoContentDomain)
 	//file updata
 	public void tdFileUpdate(TodoFileDomain todoFileDomain);
 
