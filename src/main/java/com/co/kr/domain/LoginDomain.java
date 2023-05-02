@@ -11,7 +11,7 @@ public class LoginDomain {
 	private Integer mbSeq;
 	private String mbId;
 	private String mbPw;
-	private Integer mbLevel
+	private Integer mbLevel;
 	private String mbIp;
 	private String mbUse;
 	private String mbCreateAt;
