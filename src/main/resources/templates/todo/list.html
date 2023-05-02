@@ -1,0 +1,70 @@
+<div class="section list">
+	<table>
+		<th:block th:if="${items}">
+			<colgroup>
+				<col style="width: 5%" />
+				<col style="width: 50%" />
+				<col style="width: 10%" />
+				<col style="width: 15%" />
+				<col style="width: 15%" />
+			</colgroup>
+			<thead>
+				<tr>
+					<th>완료</th>
+					<th>제목</th>
+					<th>아이디</th>
+					<th>등록일</th>
+					<th>수정일</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<tr th:each="item : ${items}" th:if="${item.mbId == session.id}">
+
+					<td
+						style="display: flex; align-items: center; justify-content: center;">
+						<a th:href="@{tdRemove(tdSeq=${item.tdSeq})}"><button>삭제</button></a>
+					<td><a a th:text="${item.tdTitle}"
+						th:href="@{/tddetail(tdSeq = ${item.tdSeq})}"></a></td>
+					<td th:text="${item.mbId}"></td>
+					<td th:text="${item.tdCreateAt}"></td>
+					<td th:text="${item.tdUpdateAt}"></td>
+				</tr>
+			</tbody>
+	</table>
+
+	<th:block th:if="${detail}">
+		<h1 style="padding: 30px 0;" th:text="${detail.tdTitle}"></h1>
+
+		<div style="text-align: right;">
+			<span style="color: #00a2be;">글번호 </span> <span
+				th:text="${detail.tdSeq}"></span> <span style="color: #00a2be">
+				| </span> <span style="color: #00a2be">글쓴이 </span> <span
+				th:text="${detail.mbId}"></span> <span style="color: #00a2be">
+				| </span> <span th:text="${detail.tdCreateAt}"></span> <span
+				style="color: #00a2be"> | </span> <span
+				th:text="${detail.tdUpdateAt}"></span>
+
+		</div>
+
+		<div>
+			<p style="padding: 30px 0;" th:text="${detail.tdContent}"></p>
+			<ul th:if="${files}" th:each="file : ${files}"
+				style="display: inline-block; margin-bottom: 5px;">
+				<li><img id="imgId" th:src="@{${file.upNewFileName}}"
+					alt="첨부이미지" height="280" /></li>
+			</ul>
+
+		</div>
+		<th:block th:if="${detail.mbId == session.id}">
+			<div style="padding: 30px 0; text-align: right;">
+				<a th:href="@{/tdedit(tdSeq = ${detail.tdSeq})}"><button>수정</button></a>
+				<a th:href="@{/tdremove(tdSeq = ${detail.tdSeq})}"><button>삭제</button></a>
+				<a th:href="@{tdList}">
+					<button
+						style="background-color: #00a2be; color: white; margin-left: 20px">목록으로</button>
+				</a>
+		</th:block>
+	</th:block>
+</div>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <header th:fragment="headerFragment">
+       <div class="lnb">
+           <div class="logo">
+                <a th:href="@{bdList}"> <span>SpringBoot</span> <span>STUDY</span></a>
+           </div>
+           
+           <div class="useInfo">
+               <span>hyunseo</span>
+           </div>
+           
+           <ul class="nav">
+               <th:block th:if="${session.id=='admin'}">
+                   <li class="on"><a class="menu1" th:href="@{adList(page=1)}">관리자</a></li>
+               </th:block>
+               <th:block>
+                   <li class="on"><a class="menu1" th:href="@{bdList}">게시판</a></li>
+               </th:block>
+               <th:block>
+               		<li class="on"><a class="menu1" th:href="@{tdList}">To Do리스트</a></li>
+               </th:block>
+           </ul>
+       </div>
+    </header>
+</html>

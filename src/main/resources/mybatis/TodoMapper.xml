@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.co.kr.mapper.TodoMapper">
+
+	<!--select all -->
+	<select id="todoList"
+		resultType="com.co.kr.domain.TodoListDomain" parameterType="com.co.kr.domain.TodoContentDomain">
+		SELECT td_seq, mb_id, td_title, td_content, td_create_at,
+		td_complete_at
+		FROM jsp.todo 
+		order by td_create_at desc
+	</select>
+
+	<insert id="tdcontentUpload"
+		parameterType="com.co.kr.domain.TodoContentDomain"
+		useGeneratedKeys="true" keyProperty="tdSeq" keyColumn="td_seq">
+
+		INSERT INTO
+		jsp.todo (
+		mb_id,
+		td_title,
+		td_content
+		)
+		VALUES (
+		#{mbId},
+		#{tdTitle},
+		#{tdContent}
+		)
+	</insert>
+
+	<insert id="tdfileUpload"
+		parameterType="com.co.kr.domain.TodoFileDomain">
+		INSERT INTO jsp.tdfiles (
+		td_seq,
+		mb_id,
+		up_original_file_name,
+		up_new_file_name,
+		up_file_path,
+		up_file_size
+		)
+		VALUES (
+		#{tdSeq},
+		#{mbId},
+		#{upOriginalFileName},
+		#{upNewFileName},
+		#{upFilePath},
+		#{upFileSize}
+		)
+	</insert>
+	<update id="tdContentUpdate"
+		parameterType="com.co.kr.domain.TodoContentDomain">
+		UPDATE jsp.todo SET
+		td_seq=#{tdSeq},
+		mb_id=#{mbId},
+		td_title=#{tdTitle},
+		td_content=#{tdContent},
+		td_complete_at=now()
+		WHERE td_seq=#{tdSeq}
+	</update>
+	<update id="tdFileUpdate"
+		parameterType="com.co.kr.domain.TodoFileDomain">
+		UPDATE jsp.tdfiles SET
+		td_seq=#{tdSeq},
+		mb_id=#{mbId},
+		up_original_file_name=#{upOriginalFileName},
+		up_new_file_name=#{upNewFileName},
+		up_file_path=#{upFilePath},
+		up_file_size=#{upFileSize}
+		WHERE td_seq=#{tdSeq}
+	</update>
+	<delete id="tdContentRemove" parameterType="hashMap">
+		DELETE FROM
+		jsp.todo WHERE td_seq=#{tdSeq}
+	</delete>
+	<delete id="tdContentAllRemove" parameterType="hashMap">
+		DELETE FROM
+		jsp.todo where mb_id=#{mbId}
+	</delete>
+	<delete id="tdFileRemove"
+		parameterType="com.co.kr.domain.TodoFileDomain">
+		DELETE FROM jsp.tdfiles WHERE td_seq = #{tdSeq}
+	</delete>
+	<delete id="tdFileAllRemove" parameterType="hashMap">
+		DELETE FROM
+		jsp.tdfiles WHERE mb_id = #{mbId}
+	</delete>
+	<!-- content -->
+	<select id="todoSelectOne"
+		resultType="com.co.kr.domain.TodoListDomain" parameterType="map">
+		SELECT
+		td_seq, mb_id, td_title, td_content, td_create_at, td_complete_at
+		FROM
+		jsp.todo where td_seq = #{tdSeq}
+	</select>
+
+	<!-- file -->
+	<select id="todoSelectOneFile"
+		resultType="com.co.kr.domain.TodoFileDomain" parameterType="map">
+		SELECT
+		td_seq, mb_id, up_original_file_name, up_new_file_name, up_file_path,
+		up_file_size
+		FROM jsp.view_todo where td_seq = #{tdSeq}
+	</select>
+</mapper>
